@@ -9,11 +9,8 @@ cursisten_stats = []
 with open("cursisten.csv") as csv_file:
     csv_reader = csv.DictReader(csv_file)
     for regel in csv_reader:
-        # maak nieuwe nested dictionary als naam nog niet is voorgekomen
-        if regel["naam"] not in cursisten:
-            cursisten[regel["naam"]] = {}
-        # zet naam en prijs van cursus in nested dictionary van relevante persoon
-        cursisten[regel["naam"]][regel["cursus"]] = regel["betaald"]
+        cursist = cursisten.setdefault(regel["naam"], {})
+        cursist[regel["cursus"]] = regel["betaald"]  # zet naam en prijs van cursus bij cursist
 
 for naam, cursus in cursisten.items():
     # maak statistieken gereed om in lijst te stoppen
